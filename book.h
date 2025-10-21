@@ -2,6 +2,8 @@
 #define BOOK_H
 
 #include <string>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
