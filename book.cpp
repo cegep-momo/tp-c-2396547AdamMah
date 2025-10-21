@@ -2,81 +2,74 @@
 #include <vector>
 #include <sstream>
 
+#include "book.h"
+
 using namespace std;
 
-class Book {
-    private:
-        string title;
-        string author;
-        string isbn;
-        bool isAvailable;
-        string borrowerName;
 
-    public:
         // Constructors
-        Book();
-        Book(const string& title, const string& author, const string& isbn) {
-            this->title = title;
-            this->author = author;
-            this->isbn = isbn;
-            this->isAvailable = false;
-            this->borrowerName = "";
+        Book::Book() : title(""), author(""), isbn(""), isAvailable(""), borrowerName("") {
+
         }
-        
+        Book::Book(const string& title, const string& author, const string& isbn) 
+            :title(title), author(author), isbn(isbn) {
+                isAvailable = false;
+                borrowerName = false;
+            }
         // Getters
-        string getTitle() const {
-            return this->title;
+        string Book::getTitle() const {
+            return title;
         }
-        string getAuthor() const {
-            return this->author;
+        string Book::getAuthor() const {
+            return author;
         }
-        string getISBN() const {
-            return this->isbn;
+        string Book::getISBN() const {
+            return isbn;
         }
-        bool getAvailability() const {
-            return this->isAvailable;
+        bool Book::getAvailability() const {
+            return isAvailable;
         }
-        string getBorrowerName() const {
-            return this->borrowerName;
+        string Book::getBorrowerName() const {
+            return borrowerName;
         }
         
         // Setters
-        void setTitle(const string& title) {
+        void Book::setTitle(const string& title) {
             this->title = title;
         }
-        void setAuthor(const string& author) {
+        void Book::setAuthor(const string& author) {
             this->author = author;
         }
-        void setISBN(const string& isbn) {
+        void Book::setISBN(const string& isbn) {
             this->isbn = isbn;
         }
-        void setAvailability(bool available) {
+        void Book::setAvailability(bool available) {
             this->isAvailable = available;
         }
-        void setBorrowerName(const string& name) {
+        void Book::setBorrowerName(const string& name) {
             this->borrowerName = name;
         }
         
         // Methods
-        void checkOut(const string& borrower) {
-            this->borrowerName = borrower;
-            this->isAvailable = false;
+        void Book::checkOut(const string& borrower) {
+            borrowerName = borrower;
+            isAvailable = false;
         }
-        void returnBook() {
-            this->borrowerName = "";
-            this->isAvailable = true;
+        void Book::returnBook() {
+            borrowerName = "";
+            isAvailable = true;
         }
-        string toString() const {
-            string availableInt = to_string(this->isAvailable);
-            return "" + this->title + "|" + this->author + "|" + this->isbn; + "|" + availableInt + "|" + this->borrowerName;
+        string Book::toString() const {
+            string availableInt = to_string(isAvailable);
+            return "" + title + "|" + author + "|" + isbn; + "|" + availableInt + "|" + borrowerName;
         }
 
         //TODO: ts
-        string toFileFormat() const {
+        string Book::toFileFormat() const {
             string availableInt = to_string(Book::getAvailability());
             return "" + Book::getTitle() + "|" + Book::getAuthor() + "|" + Book::getISBN(); + "|" + availableInt + "|" + Book::getBorrowerName();
         }
-        void fromFileFormat(const string& line) {
+        void Book::fromFileFormat(const string& line) {
             stringstream stream(line);
             string segment;
             vector<string> seglist;
@@ -85,11 +78,11 @@ class Book {
                 seglist.push_back(segment);
             }
 
-            this->title = seglist[0];
-            this->author = seglist[1];
-            this->isbn = seglist[2];
-            this->isAvailable = stoi(seglist[3]);
+            title = seglist[0];
+            author = seglist[1];
+            isbn = seglist[2];
+            isAvailable = stoi(seglist[3]);
             //possible que si dernier line vide, elem 4 pas ajoute
-            this->borrowerName = seglist[4];
+            borrowerName = seglist[4];
         }
-};
+
